@@ -20,9 +20,9 @@ import * as React from 'react'
 import Link from 'next/link'
 import { loadMarkdown, useMarkdownForm } from '@tinacms/next-tinacms-markdown'
 
-export default function PostIndex() {
-  let posts = loadMarkdown(loadPosts())
-
+export default function PostIndex(props) {
+  //let posts = loadMarkdown(loadPosts())
+  let posts = []
   return (
     <>
       <h1>Posts</h1>
