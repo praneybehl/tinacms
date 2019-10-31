@@ -27,57 +27,42 @@ export default function Page(props) {
   let cms = useCMS()
 
   let [post, form] = useCMSForm({
-    id: "blogpost",
-    label: props.slug,
+    id: props.fileRelativePath,
+    label: "blogpost",
     initialValues: {
-      rawMarkdownBody: props.rawMarkdownBody,
-      test: "asdfioahsdlkjahsd"
+      title: props.title
     },
     fields: [
       {
-        name: "rawMarkdownBody",
-        component: "textarea"
-      },
-      {
-        name: "test",
+        name: "title",
         component: "text"
       }
     ],
-    onSubmit(data) {
-      return cms.api.git.onSubmit({
-        files: [props.fileRelativePath],
-        message: 'Tina commit',
-        name: 'dude',
-        email: 'duder@b.c',
-      })
-    }
   })
 
-  // let writeToDisk = React.useCallback(formState => {
-  //   cms.api.git.writeToDisk({
-  //     fileRelativePath: props.fileRelativePath,
-  //     content: formState.values.rawMarkdownBody,
-  //   })
-  // }, [])
+  let writeToDisk = React.useCallback(formState => {
+    cms.api.git.writeToDisk({
+      fileRelativePath: props.fileRelativePath,
+      content: JSON.stringify({title: formState.values.title})
+    })
+  }, [])
 
-  // useWatchFormValues(form, writeToDisk)
+  useWatchFormValues(form, writeToDisk)
 
   return (
     <>
-      <h1>Foo</h1>
-      <section dangerouslySetInnerHTML={{__html: props.html}}></section>
+      <h1>{post.title}</h1>
     </>
   )
 }
 
 Page.getInitialProps = function(ctx) {
   const { slug } = ctx.query
-  let content = require(`../posts/${slug}.md`)
+  let content = require(`../posts/${slug}.json`)
 
   return {
     slug: slug,
-    fileRelativePath: `/posts/${slug}.md`,
-    rawMarkdownBody: content.default,
-    html: content.default
+    fileRelativePath: `/posts/${slug}.json`,
+    title: content.title
   }
 }
