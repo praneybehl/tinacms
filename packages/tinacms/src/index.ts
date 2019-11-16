@@ -21,6 +21,7 @@ export * from './components/Tina'
 export * from './components/sidebar/SidebarProvider'
 export * from './components/modals/ModalProvider'
 export { ActionButton } from './components/ActionsMenu'
+export { FieldMeta } from './plugins/fields/wrapFieldWithMeta'
 
 // React
 export * from './hooks/use-tina'
@@ -29,6 +30,7 @@ export * from './hooks/use-tina'
 export * from './plugins/create-content-form-plugin'
 export * from './plugins/screen-plugin'
 export * from './plugins/fields'
+export { GlobalFormPlugin } from './plugins/screens'
 
 // TinaCMS Instance
 export { TinaCMS } from './tina-cms'
